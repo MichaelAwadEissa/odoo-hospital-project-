@@ -1,0 +1,84 @@
+....department......
+
+from odoo import models, fields
+
+class Department(models.Model):
+    _name = 'hms.department'
+    _description = 'Department'
+
+    name = fields.Char(string='Department Name', required=True)
+    capacity = fields.Integer(string='Capacity')
+    is_opened = fields.Boolean(string='Is Opened')
+
+
+
+
+
+...doctor....
+from odoo import models, fields
+
+class Doctor(models.Model):
+    _name = 'hms.doctor'
+    _description = 'Doctor'
+
+    name = fields.Char()
+    first_name = fields.Char()
+    last_name = fields.Char()
+    image = fields.Binary()
+
+
+......patient ...
+from odoo import models, fields
+
+
+class Patient(models.Model):
+    _name = 'hms.patient'
+    _description = 'Patient'
+
+
+    name = fields.Char()
+    first_name = fields.Char()
+    last_name = fields.Char()
+    birth_date = fields.Date()
+    history = fields.Html()
+    cr_ratio = fields.Float()
+    blood_type = fields.Selection([
+        ('A', 'A'),
+        ('B', 'B'),
+        ('AB', 'AB'),
+        ('O', 'O')
+    ])
+    pcr = fields.Boolean()
+    image = fields.Binary()
+    address = fields.Text()
+    age = fields.Integer()
+
+    department_id = fields.Many2one('hms.department')
+
+
+
+
+
+    The patient model should be linked to department and
+doctors and the selected department capacity should be
+shown from the patient view too.
+➢ Add new log history for the patient
+➢ The log record shows the following date:
+➢ Created by, Date, description
+➢ The patient should have a states (Undetermined, Good,
+Fair, Serious)
+➢ With each change of the state a new log record is being
+created with a description of (State changed to
+NEW_STATE)
+OSD
+4HMS
+➢ The patient can’t choose a closed department
+➢ The Doctors field is a many2many tags and should be
+readonly until the department is being selected
+➢ The first name and last name are required
+➢ If The pcr field is checked, the CR ratio field should be
+mandatory
+➢ The history field should be hidden if the age is less than 50
+➢ The PCR field should be automatically checked if the age is
+lower than 30 and show a warning message that it has
+been checked
